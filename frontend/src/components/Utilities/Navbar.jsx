@@ -8,6 +8,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import { FaTruck } from "react-icons/fa";
 import { IoMdHelp } from "react-icons/io";
+import { RiAdminFill } from "react-icons/ri";
 
 const Navbar = ()=>{
 
@@ -44,10 +45,12 @@ const Navbar = ()=>{
 
 
             <ul className='flex flex-col justify-start items-start mt-[70px] px-[40px] gap-5'>
-                <li className='flex gap-3 justify-center items-center'><GoHomeFill/>Home</li>
-                <li className='flex gap-3 justify-center items-center'><FaTruck />Orders</li>
-                <li className='flex gap-3 justify-center items-center'><IoMdHelp />Help</li>
-                <li className='flex gap-3 justify-center items-center'><CgProfile/>Profile</li>
+                <Link to='/'><li className='flex gap-3 justify-center items-center'><GoHomeFill/>Home</li></Link>
+                <Link><li className='flex gap-3 justify-center items-center'><FaTruck />Orders</li></Link>
+                <Link><li className='flex gap-3 justify-center items-center'><IoMdHelp />Help</li></Link>
+                <Link to='/dashboard'><li className='flex gap-3 justify-center items-center'><CgProfile/>Profile</li></Link>
+                <Link to='/admin'><li className='flex gap-3 justify-center items-center'><RiAdminFill />Admin</li></Link>
+
             </ul>
         </div>
     </div>

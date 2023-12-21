@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../Utilities/Navbar/Navbar";
 import { CiMobile1 } from "react-icons/ci";
+import ScaleLoader from 'react-spinners/ScaleLoader'
 
 const AddMobile = () => {
     const [mobileDetails, setMobileDetails] = useState({
@@ -20,6 +21,7 @@ const AddMobile = () => {
     });
 
     const [images, setImages] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleInput = (e) => {
         const field = e.target.name;
@@ -33,11 +35,49 @@ const AddMobile = () => {
         setImages(selectedImages);
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(mobileDetails);
-        console.log(images);
+
+
+
+    const uploadImages = async (images) => {
+        try {
+            const uploadPromises = images.map(async (image) => {
+                const data = new FormData();
+                data.append("file", image);
+                data.append('upload_preset', 'mobileStore');
+                data.append('cloud_name', 'dnqaa5alo');
+
+                const response = await fetch('https://api.cloudinary.com/v1_1/dnqaa5alo/image/upload', {
+                    method: "POST",
+                    body: data
+                });
+
+                const imageData = await response.json();
+                return imageData.url; 
+            });
+
+            return Promise.all(uploadPromises); 
+        } catch (err) {
+            console.log(err);
+            throw new Error('Image upload failed'); 
+        }
     }
+
+    const handleSubmit = async (e) => {
+        setLoading(true)
+        e.preventDefault();
+        try {
+            const imageUrls = await uploadImages(images);
+            if (imageUrls) {
+                console.log(imageUrls);
+                console.log(mobileDetails);
+                console.log(images);
+                setLoading(false)
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
 
     return (
         <>
@@ -79,9 +119,11 @@ const AddMobile = () => {
                         <span>Images: </span> <input type="file" name="images" onChange={handleImageChange} multiple className='' />
                     </div>
 
-                    <button type="submit" className='bg-black text-white rounded-full hover:bg-white hover:text-black duration-300 w-full' onClick={handleSubmit}>
+                    {!loading && <button type="submit" className='bg-black text-white rounded-full hover:bg-white hover:text-black duration-300 w-full' onClick={handleSubmit}>
                         Add
-                    </button>
+                    </button>}
+
+                    {loading && <ScaleLoader />}
 
                 </form>
 

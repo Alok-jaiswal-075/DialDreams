@@ -2,6 +2,8 @@ const cookieParser = require('cookie-parser')
 const express = require('express')
 const { urlencoded } = require('express')
 const mongoose = require('mongoose')
+const multer = require('multer')
+const upload = multer({dest:'uploads/'})
 require('dotenv').config({ path: './config.env' })
 
 
@@ -19,9 +21,15 @@ app.use(urlencoded({ extended: false }))
 app.use(cookieParser())
 
 
-app.get('/',(req,res)=>{
-    res.send('hello world')
-})
+
+const authRoutes = require('./routes/auth')
+
+
+// app.get('/',(req,res)=>{
+//     res.send('hello world')
+// })
+
+app.use('/api/auth', authRoutes)
 
 
 app.use((err, req, res, next) => {

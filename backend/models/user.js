@@ -31,6 +31,9 @@ const userSchema = mongoose.Schema({
         required:true,
         unique:true
     },
+    profile : {
+        type:String
+    },
     address: {
         type: String
     },

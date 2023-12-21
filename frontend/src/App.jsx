@@ -4,6 +4,7 @@ import './App.css'
 import Home from './components/Home/Home'
 import User from './components/User/Main'
 import Admin from './components/Admin/Main'
+import Explore from './components/Explore/Main'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/dashboard' element={<User/>}/>
         <Route path='/admin' element={<Admin/>}/>
+        <Route path='/explore' element={<Explore/>}/>
       </Routes>
     </BrowserRouter>
   )

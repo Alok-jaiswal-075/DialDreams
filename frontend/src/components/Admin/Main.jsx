@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../Utilities/Navbar";
+import Navbar from "../Utilities/Navbar/Navbar";
 import Info from './Info'
 import Navigation from "./Navigation";
 import Mobiles from './Mobiles'

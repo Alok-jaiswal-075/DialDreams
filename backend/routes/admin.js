@@ -27,11 +27,23 @@ router.get('/', isLoggedIn,isAdmin, catchAsync(async (req, res) => {
 router.post('/add-mobile', isLoggedIn, isAdmin, catchAsync(async (req, res) => {
     const { mobileDetails, images } = req.body
 
-    const newMobile = new Mobile({...mobileDetails,images});
+    const { price, quantity,storage,discount,fcamera,bcamera, ...otherDetails } = mobileDetails;
+
+    const newMobile = new Mobile({
+        price: parseFloat(price),
+        quantity: parseInt(quantity),
+        fcamera:parseInt(fcamera),
+        bcamera:parseInt(bcamera),
+        storage:parseInt(storage),
+        discount:parseFloat(discount),
+
+        ...otherDetails,
+        images
+    });
 
     newMobile.save();
 
-    res.json({'msg':'New Mobile Added'})
+    res.json(newMobile)
 }))
 
 

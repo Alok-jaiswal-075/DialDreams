@@ -8,12 +8,14 @@ import Explore from './components/Explore/Main'
 import Login from './components/Forms/Login'
 import SignUp from './components/Forms/Signup'
 import AddMobile from './components/Forms/AddMobile'
+import Navbar from './components/Utilities/Navbar/Navbar'
 
 
 function App() {
 
   return (
     <BrowserRouter>
+      <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/dashboard' element={<User/>}/>

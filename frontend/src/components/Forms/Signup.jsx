@@ -1,10 +1,12 @@
 import React,{useState} from "react";
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import Navbar from "../Utilities/Navbar/Navbar";
 import { MdOutlineAppRegistration } from "react-icons/md";
 import ScaleLoader from 'react-spinners/ScaleLoader'
 
 const SignUp = ()=>{
+
+    const Navigate = useNavigate();
 
     const [user, setUser] = useState({fname:"",lname:"", email: "", password: "",cpassword:"",role:"buyer",phone:"",address:"",pincode:"",state:"", });
 
@@ -79,15 +81,17 @@ const SignUp = ()=>{
                 const responseData = await res.json();
                 setLoading(false)
                 console.log(responseData);
+                Navigate('/login')
             }
         } catch (error) {
             console.error(error.message);
+            setLoading(false)
+            window.alert("Registration failed")
         }
     }
 
     return(
         <>
-            <Navbar />
 
             <div className='max-w-[1640px] flex justify-center items-center my-[3rem]'>
 

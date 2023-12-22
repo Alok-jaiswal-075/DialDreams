@@ -22,12 +22,12 @@ const MobileView = ({nav,handleSetNav})=>{
 
 
                 <ul className='flex flex-col justify-start items-start mt-[70px] px-[40px] gap-5'>
-                    <Link to='/'><li className='flex gap-3 justify-center items-center'><GoHomeFill/>Home</li></Link>
-                    <Link><li className='flex gap-3 justify-center items-center'><FaTruck />Orders</li></Link>
-                    <Link><li className='flex gap-3 justify-center items-center'><IoMdHelp />Help</li></Link>
-                    <Link to='/dashboard'><li className='flex gap-3 justify-center items-center'><CgProfile/>Profile</li></Link>
-                    <Link to='/admin'><li className='flex gap-3 justify-center items-center'><RiAdminFill />Admin</li></Link>
-                    <Link to='/login'><li className='flex gap-3 justify-center items-center'><RiAdminFill />Login</li></Link>
+                    <Link to='/'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><GoHomeFill/>Home</li></Link>
+                    <Link><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><FaTruck />Orders</li></Link>
+                    <Link><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><IoMdHelp />Help</li></Link>
+                    <Link to='/dashboard'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><CgProfile/>Profile</li></Link>
+                    <Link to='/admin'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><RiAdminFill />Admin</li></Link>
+                    <Link to='/login'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><RiAdminFill />Login</li></Link>
 
                 </ul>
             </div>

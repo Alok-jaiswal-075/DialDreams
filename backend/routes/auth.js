@@ -34,14 +34,16 @@ router.post('/register', catchAsync(async (req, res) => {
         profile
     })
 
-    const newCart = new Cart({buyer:user});
+    const newCart = new Cart();
+
+    newCart.buyer = user
     user.cart = newCart;
 
     await newCart.save();
     await user.save();
     // console.log(user)
 
-    res.json({ user })
+    res.json({"msg":"Registration Successful"})
 }))
 
 
@@ -71,7 +73,7 @@ router.post('/login', catchAsync(async (req, res) => {
         })
 
 
-        res.json({ msg: 'Login successful' })
+        res.json({ msg: 'Login successful', role:user.role })
     }
     else throw new appError(401, 'Invalid Credentials')
 }))

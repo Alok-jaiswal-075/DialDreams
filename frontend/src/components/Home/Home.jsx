@@ -6,7 +6,6 @@ import NewArrivals from "./NewArrivals";
 const Home = ()=>{
     return (
         <div>
-            <Navbar/>
             <Hero/>
             <NewArrivals/>
         </div>

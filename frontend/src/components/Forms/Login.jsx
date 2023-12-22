@@ -1,10 +1,13 @@
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Navbar from "../Utilities/Navbar/Navbar";
 import { FaUserLock } from "react-icons/fa";
 import ScaleLoader from 'react-spinners/ScaleLoader'
+import Loader from "../Utilities/Loading";
 
 const Login = ()=>{
+
+    const Navigate = useNavigate();
 
     const [user, setUser] = useState({ email: "", password: ""});
     const [loading, setLoading] = useState(false);
@@ -43,16 +46,20 @@ const Login = ()=>{
             const responseData = await res.json();
             setLoading(false)
             console.log(responseData);
+            if (responseData.role === 'admin'){
+                Navigate('/admin')
+            }
+            else Navigate('/dashboard')
             
         } catch (error) {
             console.error(error.message);
+            setLoading(false)
+            window.alert("Login failed")
         }
     }
 
     return(
         <>
-            <Navbar/>
-
             <div className='max-w-[1640px] flex justify-center items-center my-[10rem]'>
 
             <form method="POST" noValidate autoComplete="off" className='flex flex-col border justify-center items-center py-6 px-4 gap-4 rounded-xl shadow-xl'>
@@ -75,6 +82,7 @@ const Login = ()=>{
 
 
             </div>
+            
         </>
     )
 }

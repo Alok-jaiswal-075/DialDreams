@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Utilities/Navbar/Navbar";
 import { CiMobile1 } from "react-icons/ci";
 import ScaleLoader from 'react-spinners/ScaleLoader'
 
 const AddMobile = () => {
+    const Navigate = useNavigate();
+
     const [mobileDetails, setMobileDetails] = useState({
         name: "",
         type: "",
@@ -68,12 +71,30 @@ const AddMobile = () => {
         try {
             const imageUrls = await uploadImages(images);
             if (imageUrls) {
-                console.log(imageUrls);
-                console.log(mobileDetails);
-                console.log(images);
+
+                const requestData = {
+                    mobileDetails,
+                    images:imageUrls
+                }
+
+                const res = await fetch('/api/admin/add-mobile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData),
+                    credentials: 'include'
+                })
+
+
+                const responseData = await res.json();
                 setLoading(false)
+                console.log(responseData);
+                Navigate('/admin')
             }
         } catch (error) {
+            setLoading(false)
+            window.alert("Process failed")
             console.error(error.message);
         }
     }
@@ -81,8 +102,6 @@ const AddMobile = () => {
 
     return (
         <>
-            <Navbar />
-
             <div className='max-w-[1640px] flex justify-center items-center my-[3rem]'>
 
                 <form method="POST" noValidate autoComplete="off" className='flex flex-col border justify-center items-center py-6 px-4 gap-4 rounded-xl shadow-xl'>

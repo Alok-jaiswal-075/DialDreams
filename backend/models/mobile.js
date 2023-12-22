@@ -42,11 +42,11 @@ const mobileSchema = mongoose.Schema({
         required: true
     },
     fcamera: {
-        type: String,
+        type: Number,
         required: true
     },
     bcamera: {
-        type: String,
+        type: Number,
         required: true
     },
     images : [

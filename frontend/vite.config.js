@@ -5,7 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server : {
     proxy : {
-      '/api': 'https://dialdreamsbackend.onrender.com'
+      '/api': 'https://dialdreamsbackend.onrender.com',
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api/, ''),
     }
   },
   plugins: [react()],

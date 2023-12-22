@@ -1,7 +1,11 @@
 {
     "rewrites": [
         {
-            "source": "/((?!api\/.*).*)",
+            "source": "/api/:path(.*)",
+            "destination": "https://dialdreamsbackend.onrender.com"
+        },
+        {
+            "source": "/(.*)",
             "destination": "/index.html"
         }
     ]

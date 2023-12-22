@@ -39,9 +39,9 @@ router.get('/get-cart', isLoggedIn, catchAsync(async (req, res) => {
 }))
 
 
-router.post('/add-to-cart',isLoggedIn,isBuyer,catchAsync(async (req,res)=>{
+router.post('/add-to-cart/:mobile_id',isLoggedIn,isBuyer,catchAsync(async (req,res)=>{
     const email = req.user.email
-    const {mobile_id,quantity} = req.body 
+    const {mobile_id} = req.params
 
     const user = await User.findOne({email:email}).populate('cart');
     const mobile = await Mobile.findById(mobile_id);
@@ -51,9 +51,7 @@ router.post('/add-to-cart',isLoggedIn,isBuyer,catchAsync(async (req,res)=>{
     if (!mobile) throw new appError(404, 'Mobile not found')
     if (!cart) throw new appError(404, 'Cart not found');
 
-    const total = mobile.price * quantity
-
-    cart.products.push({mobile,quantity,total})
+    cart.products.push({mobile,quantity:1,total:mobile.price})
 
     cart.save();
 

@@ -1,6 +1,5 @@
 import React from "react";
 import ScaleLoader from 'react-spinners/ScaleLoader'
-import Navbar from "./Navbar/Navbar";
 
 const Loader = ()=>{
     return(

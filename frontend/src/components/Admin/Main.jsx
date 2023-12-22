@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from "react";
-import Navbar from "../Utilities/Navbar/Navbar";
 import Info from './Info'
 import Navigation from "./Navigation";
 import Mobiles from './Mobiles'
@@ -65,7 +64,7 @@ const Admin = ()=>{
                     <div>
                         <Info adminDetails={adminDetails} />
                         <Navigation active={active} handleActive={handleActive} />
-                        {active && <Mobiles />}
+                        {active && <Mobiles mobiles={mobiles}/>}
                         {!active && <Orders />}
                     </div>
         }

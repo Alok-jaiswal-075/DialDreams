@@ -27,6 +27,7 @@ const MobileView = ({nav,handleSetNav})=>{
                     <Link><li className='flex gap-3 justify-center items-center'><IoMdHelp />Help</li></Link>
                     <Link to='/dashboard'><li className='flex gap-3 justify-center items-center'><CgProfile/>Profile</li></Link>
                     <Link to='/admin'><li className='flex gap-3 justify-center items-center'><RiAdminFill />Admin</li></Link>
+                    <Link to='/login'><li className='flex gap-3 justify-center items-center'><RiAdminFill />Login</li></Link>
 
                 </ul>
             </div>

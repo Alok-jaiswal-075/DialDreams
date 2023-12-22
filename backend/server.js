@@ -23,6 +23,8 @@ app.use(cookieParser())
 
 
 const authRoutes = require('./routes/auth')
+const buyerRoutes = require('./routes/buyer')
+const adminRoutes = require('./routes/admin')
 
 
 // app.get('/',(req,res)=>{
@@ -30,6 +32,8 @@ const authRoutes = require('./routes/auth')
 // })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/buyer',buyerRoutes)
+app.use('/api/admin', adminRoutes)
 
 
 app.use((err, req, res, next) => {

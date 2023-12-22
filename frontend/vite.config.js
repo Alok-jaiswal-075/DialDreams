@@ -6,9 +6,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://dialdreamsbackend.onrender.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        // target: 'https://dialdreamsbackend.onrender.com',
+        target: 'http://localhost:3000/',
+        // changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

@@ -48,7 +48,23 @@ const mobileSchema = mongoose.Schema({
     bcamera: {
         type: String,
         required: true
+    },
+    images : [
+        {
+            type : String
+        }
+    ],
+    date: {
+        type: Date,
+        default: Date.now
     }
+});
+
+mobileSchema.pre('save', function (next) {
+    if (!this.isNew) {
+        this.date = new Date(); 
+    }
+    next();
 });
 
 module.exports = mongoose.model('Mobile', mobileSchema);

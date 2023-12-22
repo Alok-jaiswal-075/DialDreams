@@ -7,6 +7,7 @@ const catchAsync = require('../Utility/catchAsync')
 const appError = require('../Utility/appError')
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
+const Cart = require('../models/cart')
 
 
 router.post('/register', catchAsync(async (req, res) => {
@@ -33,6 +34,10 @@ router.post('/register', catchAsync(async (req, res) => {
         profile
     })
 
+    const newCart = new Cart({buyer:user});
+    user.cart = newCart;
+
+    await newCart.save();
     await user.save();
     // console.log(user)
 

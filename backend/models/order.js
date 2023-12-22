@@ -5,31 +5,31 @@ const User = require('./user')
 const orderSchema = mongoose.Schema({
     "buyer": {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        ref: 'User'
     },
-    "mobiles": [
-        {
-            "mobile" : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref:'Mobile'
-            },
 
-            "quantity" : {
-                type : Number,
-                default : 1
-            }, 
+    "mobile": {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Mobile'
+    },
 
-            "total" : {
-                type: Number
-            },
+    "quantity": {
+        type: Number,
+        default: 1
+    },
 
-            "status" : {
-                type : String,
-                enum : ["pending","delivered"]
+    "total": {
+        type: Number,
+        required: true
+    },
 
-            }
-        }
-    ]
+    "status": {
+        type: String,
+        enum: ["pending", "delivered"],
+        required: true
+
+    }
+
 })
 
-module.exports = mongoose.model('Order',orderSchema)
+module.exports = mongoose.model('Order', orderSchema)

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Order = require('./order')
 const Mobile = require('./mobile')
+const Cart = require('./cart')
 
 const userSchema = mongoose.Schema({
     fname: {
@@ -49,12 +50,11 @@ const userSchema = mongoose.Schema({
             ref: 'Order'
         }
     ],
-    cart : [
-        {
+    cart : {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Mobile'
+            ref: 'Cart'
         }
-    ]
+    
 });
 
 

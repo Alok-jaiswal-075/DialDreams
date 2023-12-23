@@ -10,22 +10,21 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
     const [isloading, setisloading] = useState(true)
     const [ischanged, setischanged] = useState(false)
     const [openConfirmation, setOpenConfirmation] = useState(false)
-    const [decision,setDecision] = useState(true)
-    const [orderLoading,setOrderLoading] = useState(false)
+    const [decision, setDecision] = useState(true)
+    const [orderLoading, setOrderLoading] = useState(false)
 
 
-    const handleIncrementQuantity = (index,event) => {
+    const handleIncrementQuantity = (index, event) => {
         event.stopPropagation();
         const updatedCart = [...cartDetails.products];
-        if (updatedCart[index].quantity < updatedCart[index].mobile.quantity) 
-        {
+        if (updatedCart[index].quantity < updatedCart[index].mobile.quantity) {
             updatedCart[index].quantity += 1;
-            updatedCart[index].total +=  updatedCart[index].mobile.price
+            updatedCart[index].total += updatedCart[index].mobile.price
         }
         updateCartDetails(updatedCart);
     };
 
-    const handleDecrementQuantity = (index,event) => {
+    const handleDecrementQuantity = (index, event) => {
         event.stopPropagation();
         const updatedCart = [...cartDetails.products];
         if (updatedCart[index].quantity > 1) {
@@ -111,9 +110,9 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
     const handleYesDecision = () => {
         setDecision(true)
         setOrderLoading(true)
-        
 
-        if(decision){
+
+        if (decision) {
             fetch('/api/buyer/order-a-cart', {
                 method: 'POST',
                 headers: {
@@ -131,7 +130,7 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
                     return response.json();
                 })
                 .then((data) => {
-                    cartDetails(data)
+                    setCartDetails(data)
                     setOrderLoading(false)
                     setOpenConfirmation(false)
                 })
@@ -142,7 +141,7 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
 
     }
 
-    const handleNoDecision = ()=>{
+    const handleNoDecision = () => {
         setDecision(false)
         handleOpenConfirmation()
     }
@@ -155,8 +154,8 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
 
     return (
         <>
-            {openConfirmation && 
-                <Confirmation message="Order all the items in cart?" handleClose={handleOpenConfirmation} handleYesDecision={handleYesDecision} handleNoDecision={handleNoDecision} buttonLoading={orderLoading}/>
+            {openConfirmation &&
+                <Confirmation message="Order all the items in cart?" handleClose={handleOpenConfirmation} handleYesDecision={handleYesDecision} handleNoDecision={handleNoDecision} buttonLoading={orderLoading} />
             }
 
             {cartOpen && <div className='bg-black/80 w-full h-full fixed z-10 top-0 left-0'></div>}
@@ -174,15 +173,15 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
 
                         <div className='mb-4 flex justify-between items-center'>
                             <h2 className='text-start text-gray-700 text-xl'>CART</h2>
-                            <button className={ischanged ? 'hidden' : 'py-0 bg-black text-white hover:bg-white hover:text-black duration-300'} onClick={(e)=>{
+                            <button className={ischanged ? 'hidden' : 'py-0 bg-black text-white hover:bg-white hover:text-black duration-300'} onClick={(e) => {
                                 e.stopPropagation()
                                 handleOpenConfirmation(true)
                             }}>Order</button>
 
-                            <button className={ischanged ? 'py-0 bg-black text-white hover:bg-white hover:text-black duration-300' : 'hidden'} onClick={(event) => { handleUpdateCart(event)}}>Apply</button>
+                            <button className={ischanged ? 'py-0 bg-black text-white hover:bg-white hover:text-black duration-300' : 'hidden'} onClick={(event) => { handleUpdateCart(event) }}>Apply</button>
                         </div>
 
-                        <hr className='border-t-2 w-full'/>
+                        <hr className='border-t-2 w-full' />
 
                         <table className="table-fixed text-start">
                             <thead className="">
@@ -195,9 +194,9 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
                             </thead>
                             <tbody>
 
-                                {cartDetails.products.map((product,index)=>
+                                {cartDetails.products.map((product, index) =>
                                     <tr key={index}>
-                                        
+
                                         <td>{product.mobile.name}</td>
                                         <td className='text-center'>{product.quantity}</td>
                                         <td>{product.total}</td>
@@ -206,8 +205,8 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
                                                 <div className="flex flex-col gap-1">
                                                     <button onClick={(event) => handleIncrementQuantity(index, event)} className='px-3 py-0 bg-green-500/20 border-none'>+</button>
 
-                                                    <button onClick={(event) => handleDecrementQuantity(index,event)} className='px-3 py-0 bg-red-500/20 border-none'>-</button>
-                                                    
+                                                    <button onClick={(event) => handleDecrementQuantity(index, event)} className='px-3 py-0 bg-red-500/20 border-none'>-</button>
+
                                                 </div>
                                             </div>
                                         </td>

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import {Link} from 'react-router-dom'
 
 import { GoHomeFill } from "react-icons/go";
@@ -7,9 +7,11 @@ import { IoIosClose } from "react-icons/io";
 import { FaTruck } from "react-icons/fa";
 import { IoMdHelp } from "react-icons/io";
 import { RiAdminFill } from "react-icons/ri";
+import { FiLogOut } from "react-icons/fi";
 
 
-const MobileView = ({nav,handleSetNav})=>{
+const MobileView = ({nav,handleSetNav,isLoggedIn,isAdmin,isBuyer,handleLogout})=>{
+
     return(
         <>
             {nav && <div className='bg-black/80 w-full h-screen fixed z-10 top-0 left-0'></div>}
@@ -23,11 +25,20 @@ const MobileView = ({nav,handleSetNav})=>{
 
                 <ul className='flex flex-col justify-start items-start mt-[70px] px-[40px] gap-5'>
                     <Link to='/'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><GoHomeFill/>Home</li></Link>
+                    
                     <Link><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><FaTruck />Orders</li></Link>
+                    
                     <Link><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><IoMdHelp />Help</li></Link>
-                    <Link to='/dashboard'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><CgProfile/>Profile</li></Link>
-                    <Link to='/admin'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><RiAdminFill />Admin</li></Link>
-                    <Link to='/login'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><RiAdminFill />Login</li></Link>
+                    
+                    {isBuyer && <Link to='/dashboard'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><CgProfile/>Profile</li></Link>}
+                    
+                    {isAdmin && <Link to='/admin'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><RiAdminFill />Admin</li></Link>}
+                    
+                    {!isLoggedIn && <Link to='/login'><li className='flex gap-3 justify-center items-center' onClick={()=>handleSetNav()}><RiAdminFill />Login</li></Link>}
+                    
+                    {
+                    isLoggedIn && <div onClick={()=>{handleLogout()}}><li className='flex gap-3 justify-center items-center cursor-pointer' onClick={() => handleSetNav()}><FiLogOut />Logout</li></div>
+                    }
 
                 </ul>
             </div>

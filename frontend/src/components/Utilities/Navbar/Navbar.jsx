@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {Link} from 'react-router-dom'
 import {AiOutlineMenu} from 'react-icons/ai'
 import { FaSearch } from "react-icons/fa";
@@ -8,16 +9,76 @@ import Cart from "./Cart";
 
 const Navbar = ()=>{
 
+    const Navigate = useNavigate();
+
     const [nav,setNav] = useState(false)
     const [cartOpen, setCartOpen] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [isBuyer, setIsBuyer] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    const handleLogout = () => {
+        fetch('/api/auth/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setIsLoggedIn(false)
+                setIsAdmin(false)
+                setIsBuyer(false)
+                Navigate('/')
+            })
+            .catch((error) => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
 
     const handleSetNav = ()=>{
         setNav(!nav)
     }
 
-    const handleSetCartOpen = ()=>{
-        setCartOpen(!cartOpen)
+    const handleSetCartOpen = (value=!cartOpen)=>{
+        setCartOpen(value)
     }
+
+    const getUser = () => {
+        fetch('/api/auth/get-user', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setIsLoggedIn(true)
+
+                if(data.role==='admin') setIsAdmin(true)
+                else setIsBuyer(true)
+            })
+            .catch((error) => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+    }
+
+    useEffect(() => {
+        getUser();
+    },[nav]);
 
 
     return(
@@ -44,7 +105,8 @@ const Navbar = ()=>{
 
         {/*Mobile view*/}
 
-        <MobileView nav = {nav} handleSetNav={handleSetNav}/>
+        <MobileView nav = {nav} isLoggedIn={isLoggedIn}
+        isAdmin={isAdmin} isBuyer={isBuyer}  handleSetNav={handleSetNav} handleLogout={handleLogout}/>
         
         {/*Cart*/}
 

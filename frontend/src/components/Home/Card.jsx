@@ -1,15 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import PuffLoader from 'react-spinners/PuffLoader'
 
 
-const Card = ({mobile}) => {
+const Card = ({ mobile }) => {
+
+    const [loading, setLoading] = useState(false);
+
+    const handleAddToCart = async () => {
+        setLoading(true)
+        try {
+
+            const res = await fetch('/api/buyer/add-to-cart/' + mobile._id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            })
+
+
+            const responseData = await res.json();
+            setLoading(false)
+            console.log(responseData);
+
+        } catch (error) {
+            console.error(error.message);
+            setLoading(false)
+            window.alert("Cart Updation failed")
+        }
+    }
 
     const { name, colour, storage, price, description, images } = mobile
 
-    return(
+    return (
         <div className='flex justify-center items-center flex-col p-5 border rounded-xl shadow-xl relative w-full h-[35rem]'>
 
-            <FaShoppingCart className='absolute top-4 left-4' size={20}/>
+            {loading ? <div className="absolute top-4 left-4"><PuffLoader size={30} /> </div> : <FaShoppingCart className='absolute top-4 left-4 cursor-pointer' size={20} onClick={handleAddToCart} />}
 
             <div className='w-[10rem] h-[10rem] overflow-hidden'>
                 <img src={images[0]} alt="mobile" className="w-fit h-[10rem]" />

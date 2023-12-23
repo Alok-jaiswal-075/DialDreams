@@ -41,7 +41,7 @@ app.use('/api/general',generalRoutes)
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
-    res.status(statusCode).json({ "msg": err.message })
+    res.status(statusCode).json({ message: err.message })
 })
 
 

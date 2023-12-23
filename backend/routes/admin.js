@@ -14,11 +14,11 @@ const { isLoggedIn, isAdmin } = require('../middleware');
 router.get('/', isLoggedIn,isAdmin, catchAsync(async (req, res) => {
     const email = req.user.email
     const user = await User.findOne({ email: email });
-    const orders = await Order.find().populate('product.mobile');
+    const orders = await Order.find().populate('mobile').populate('buyer');
     const mobiles = await Mobile.find();
 
     if (!user) throw new appError(404, 'User not found')
-
+ 
     res.json({user,orders,mobiles})
 }))
 

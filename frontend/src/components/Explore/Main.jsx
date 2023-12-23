@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Filter from "./Filter";
 import Mobiles from "./Mobiles";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const Explore = () => {
     const [mobiles, setMobiles] = useState([]);
@@ -52,7 +53,7 @@ const Explore = () => {
                 handleFilterChange={handleFilterChange}
                 mobiles={mobiles}
             />
-            <Mobiles mobiles={filteredMobiles} />
+            {isloading ? <ScaleLoader/> : <Mobiles mobiles={filteredMobiles} />}
         </>
     );
 };

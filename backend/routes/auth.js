@@ -7,7 +7,13 @@ const catchAsync = require('../Utility/catchAsync')
 const appError = require('../Utility/appError')
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
-const Cart = require('../models/cart')
+const Cart = require('../models/cart');
+const { isLoggedIn } = require('../middleware');
+
+
+router.get('/get-user', isLoggedIn, catchAsync(async (req, res) => {
+    res.json({'role':req.user.role})
+}))
 
 
 router.post('/register', catchAsync(async (req, res) => {
@@ -78,6 +84,10 @@ router.post('/login', catchAsync(async (req, res) => {
     else throw new appError(401, 'Invalid Credentials')
 }))
 
+
+router.post('/logout', catchAsync(async (req, res) => {
+    res.clearCookie('token').json({ 'msg': 'Logged out successfully' })
+}))
 
 
 module.exports = router

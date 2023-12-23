@@ -47,6 +47,13 @@ const SignUp = ()=>{
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        
+        if(password !== cpassword){
+            alert('Passwords do not match!')
+            setLoading(false)
+            return
+        }
+
         try {
             const imgUrl = await uploadImage(image);
             if (imgUrl) {

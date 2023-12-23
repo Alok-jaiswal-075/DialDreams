@@ -12,7 +12,7 @@ const UserInfo = ({user}) => {
 
                 <div className='flex items-center gap-1 sm:gap-2 flex-col mr-10'>
                     <div className='w-[5rem] h-[5rem] sm:w-[7rem] sm:h-[7rem]'>
-                        <img src={user.profile} alt="" className='w-full h-full object-cover rounded-full' />
+                        <img src={user.profile ? user.profile : profile} alt="profile" className='w-full h-full object-cover rounded-full' />
                     </div>
 
                     <h4 className='font-semibold'>{user.fname} {user.lname}</h4>

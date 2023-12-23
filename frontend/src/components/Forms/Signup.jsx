@@ -48,7 +48,7 @@ const SignUp = ()=>{
         e.preventDefault();
         setLoading(true);
         
-        if(password !== cpassword){
+        if(user.password !== user.cpassword){
             alert('Passwords do not match!')
             setLoading(false)
             return

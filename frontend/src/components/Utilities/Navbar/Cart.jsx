@@ -131,7 +131,7 @@ const Cart = ({ cartOpen, handleSetCartOpen }) => {
                     return response.json();
                 })
                 .then((data) => {
-                    setCartDetails(data)
+                    cartDetails(data)
                     setOrderLoading(false)
                     setOpenConfirmation(false)
                 })

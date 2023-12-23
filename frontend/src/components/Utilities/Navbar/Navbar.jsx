@@ -11,74 +11,72 @@ const Navbar = ()=>{
 
     const Navigate = useNavigate();
 
-    const [nav,setNav] = useState(false)
+    const [nav, setNav] = useState(false)
     const [cartOpen, setCartOpen] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [isBuyer, setIsBuyer] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    const handleLogout = () => {
-        fetch('/api/auth/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include'
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setIsLoggedIn(false)
-                setIsAdmin(false)
-                setIsBuyer(false)
-                Navigate('/')
-            })
-            .catch((error) => {
-                console.error('There was a problem with the fetch operation:', error);
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
             });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            setIsLoggedIn(false);
+            setIsAdmin(false);
+            setIsBuyer(false);
+            Navigate('/');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    const handleSetNav = ()=>{
+    const handleSetNav = () => {
         setNav(!nav)
     }
 
-    const handleSetCartOpen = (value=!cartOpen)=>{
+    const handleSetCartOpen = (value = !cartOpen) => {
         setCartOpen(value)
     }
 
-    const getUser = () => {
-        fetch('/api/auth/get-user', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include'
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setIsLoggedIn(true)
-
-                if(data.role==='admin') setIsAdmin(true)
-                else setIsBuyer(true)
-            })
-            .catch((error) => {
-                console.error('There was a problem with the fetch operation:', error);
+    const getUser = async () => {
+        try {
+            const response = await fetch('/api/auth/get-user', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
             });
 
+            
+            const data = await response.json();
+            setIsLoggedIn(true);
+            
+            if(response.ok){
+                if (data.role === 'admin') setIsAdmin(true);
+                else setIsBuyer(true);
+            }
+
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
         getUser();
-    },[nav]);
+    }, [nav]);
 
 
     return(

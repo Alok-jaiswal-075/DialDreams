@@ -1,17 +1,17 @@
-import React,{useState} from "react";
-import {Link,useNavigate} from 'react-router-dom'
+import React, { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom'
 import Navbar from "../Utilities/Navbar/Navbar";
 import { MdOutlineAppRegistration } from "react-icons/md";
 import ScaleLoader from 'react-spinners/ScaleLoader'
 
-const SignUp = ()=>{
+const SignUp = () => {
 
     const Navigate = useNavigate();
 
-    const [user, setUser] = useState({fname:"",lname:"", email: "", password: "",cpassword:"",role:"buyer",phone:"",address:"",pincode:"",state:"", });
+    const [user, setUser] = useState({ fname: "", lname: "", email: "", password: "", cpassword: "", role: "buyer", phone: "", address: "", pincode: "", state: "", });
 
     const [image, setImage] = useState();
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleInput = (e) => {
         const field = e.target.name;
@@ -20,7 +20,7 @@ const SignUp = ()=>{
         setUser({ ...user, [field]: value })
     }
 
-    const handleImageChange = (e)=>{
+    const handleImageChange = (e) => {
         setImage(e.target.files[0]);
     }
 
@@ -37,27 +37,35 @@ const SignUp = ()=>{
             });
 
             const imageData = await response.json();
-            return imageData.url; 
+            return imageData.url;
         } catch (err) {
             console.log(err);
-            throw new Error('Image upload failed'); 
+            throw new Error('Image upload failed');
         }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        
-        if(user.password !== user.cpassword){
-            alert('Passwords do not match!')
-            setLoading(false)
-            return
-        }
 
         try {
+            if (!user.fname || !user.lname || !user.email || !user.password || !user.phone || !user.address || !user.pincode || !user.state) {
+                setLoading(false);
+                return window.alert("Please fill in all required fields");
+            }
+
+            if (user.password !== user.cpassword) {
+                setLoading(false);
+                return window.alert("Passwords do not match");
+            }
+
+            if (!image) {
+                setLoading(false);
+                return window.alert("Please select a profile image");
+            }
+
             const imgUrl = await uploadImage(image);
             if (imgUrl) {
-
                 const { fname, lname, email, password, phone, role, address, pincode, state } = user;
 
                 const requestData = {
@@ -70,34 +78,32 @@ const SignUp = ()=>{
                     address,
                     pincode,
                     state,
-                    profile: imgUrl 
+                    profile: imgUrl
                 };
 
-
-
-                const res = await fetch('/api/auth/register',{
+                const res = await fetch('/api/auth/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(requestData),
                     credentials: 'include'
-                })
-
+                });
 
                 const responseData = await res.json();
-                setLoading(false)
+                setLoading(false);
                 console.log(responseData);
-                Navigate('/login')
+                Navigate('/login');
             }
         } catch (error) {
             console.error(error.message);
-            setLoading(false)
-            window.alert("Registration failed")
+            setLoading(false);
+            window.alert("Registration failed");
         }
     }
 
-    return(
+
+    return (
         <>
 
             <div className='max-w-[1640px] flex justify-center items-center my-[3rem]'>
@@ -120,7 +126,7 @@ const SignUp = ()=>{
 
                     <textarea name="address" placeholder="Address" cols="23" rows="5" className='border rounded-md px-4 py-1 text-gray-600' required onChange={handleInput}></textarea>
 
-                    <input type="text" placeholder="Pincode" name="pincode" value={user.pincode} onChange={handleInput} required className='border rounded-md px-4 py-1 text-gray-600 ' maxLength={6} pattern="[0-9]*" inputMode="numeric"/>
+                    <input type="text" placeholder="Pincode" name="pincode" value={user.pincode} onChange={handleInput} required className='border rounded-md px-4 py-1 text-gray-600 ' maxLength={6} pattern="[0-9]*" inputMode="numeric" />
 
                     <input type="state" placeholder="State" name="state" value={user.state} onChange={handleInput} required className='border rounded-md px-4 py-1 text-gray-600 ' />
 
@@ -132,7 +138,7 @@ const SignUp = ()=>{
                         Sign Up
                     </button>}
 
-                    {loading && <ScaleLoader/>}
+                    {loading && <ScaleLoader />}
 
                     <p>Already have a account? <Link to="/login" className='text-orange-500'>Login</Link></p>
 

@@ -93,10 +93,10 @@ const Navbar = () => {
                 </div></Link>
             </div>
 
-            <div className='hidden sm:flex bg-gray-200 items-center pl-4 gap-2 p-1 sm:px-3 rounded-full w-[200px] sm:w-[400px] lg:[500px]'>
+            {/* <div className='hidden sm:flex bg-gray-200 items-center pl-4 gap-2 p-1 sm:px-3 rounded-full w-[200px] sm:w-[400px] lg:[500px]'>
                 <FaSearch />
                 <input type="text" placeholder="Search for mobile..." className='bg-transparent w-full focus:outline-none' />
-            </div>
+            </div> */}
 
             <button className=' bg-black text-white rounded-full' onClick={() => { setCartOpen(!cartOpen) }}>
                 <FaShoppingCart size={20} />

@@ -1,10 +1,12 @@
 import React,{useState} from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import  PuffLoader  from 'react-spinners/PuffLoader'
+import { useNavigate } from "react-router-dom";
 
 
 const Card = ({mobile}) => {
 
+    const Navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
     const handleAddToCart =async ()=>{
@@ -29,6 +31,10 @@ const Card = ({mobile}) => {
             setLoading(false)
             window.alert("Cart Updation failed")
         }
+    }
+
+    const navigateToDash = ()=>{
+        Navigate('/mobile/'+mobile._id)
     }
 
     const { name, colour, storage, price, description, images } = mobile
@@ -58,7 +64,7 @@ const Card = ({mobile}) => {
                 <p className='text-[0.7rem] text-left p-3 border border-gray-400/70 rounded-lg my-2 h-[8rem] sm:h-[11rem] overflow-hidden'>{description}</p>
 
                 <button className='w-full my-1 bg-black text-white hover:bg-transparent hover:text-black duration-200 text-sm'>Buy Now</button>
-                <button className='w-full my-1 hover:bg-black hover:text-white duration-200 text-sm'>Learn More</button>
+                <button className='w-full my-1 hover:bg-black hover:text-white duration-200 text-sm' onClick={navigateToDash}>Learn More</button>
 
 
             </div>

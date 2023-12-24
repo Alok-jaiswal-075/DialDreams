@@ -25,6 +25,14 @@ router.get('/all-mobiles', catchAsync(async (req, res) => {
     res.json({ mobiles: allphones });
 }))
 
+router.get('/mobile/:id', catchAsync(async (req, res) => {
+    const {id} = req.params
 
+    const phone = await Mobile.findById(id)
+
+    if(!phone) throw new appError(400,'Mobile does not exist')
+
+    res.json(phone);
+}))
 
 module.exports = router

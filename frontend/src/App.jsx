@@ -9,6 +9,7 @@ import Login from './components/Forms/Login'
 import SignUp from './components/Forms/Signup'
 import AddMobile from './components/Forms/AddMobile'
 import Navbar from './components/Utilities/Navbar/Navbar'
+import MobileDash from './components/Explore/MobileDash/Mobile'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='/mobile/add' element={<AddMobile/>}/>
+        <Route path='/mobile/:id' element={<MobileDash/>}/>
       </Routes>
     </BrowserRouter>
   )

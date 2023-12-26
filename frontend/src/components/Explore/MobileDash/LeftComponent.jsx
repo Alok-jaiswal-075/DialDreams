@@ -36,7 +36,7 @@ const LeftComponent = ({images,id}) => {
             <Carousel images={images}/>
 
 
-            <div className='flex gap-3 justify-center items-center py-4 px-10'>
+            <div className='flex gap-3 justify-center items-center py-4'>
 
                 <button className='w-[10rem] bg-black text-white rounded-full hover:text-black hover:bg-white duration-300'>Order Now</button>
 

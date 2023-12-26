@@ -18,7 +18,7 @@ export default function Carousel({images}) {
 
     return (
         <div className='flex justify-center items-center'>
-            <div className="overflow-hidden relative rounded-2xl border shadow-2xl m-2 self-start w-[20rem] h-[28rem] sm:w-[23rem] sm:h-[28rem]">
+            <div className="overflow-hidden relative rounded-2xl border shadow-2xl m-2 self-start w-[15rem] h-[20rem] sm:w-[23rem] sm:h-[28rem]">
                 <div
                     className={`flex transition ease-out duration-40 w-full h-full`}
                     style={{
@@ -26,7 +26,7 @@ export default function Carousel({images}) {
                     }}
                 >
                     {images && images.map((src, index) => {
-                        return <img src={src} key={index} className='w-fit object-contain' />;
+                        return <img src={src} key={index} className='w-fit object-contain px-1' />;
                     })}
                 </div>
 
